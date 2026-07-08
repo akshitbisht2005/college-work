@@ -12,6 +12,7 @@ function App() {
       <Navbar />
       <Hero />
       <Categories />
+      <h1>Lorem ipsum dolor sit amet.</h1>
       <Restaurants/>
       <Features />
       <Footer />
