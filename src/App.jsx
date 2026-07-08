@@ -9,6 +9,7 @@ import GoogleAuth from "./components/GoogleAouth";
 function App() {
   return (
     <>
+    <h2>akshit saket wale</h2>
       <Navbar />
       <Hero />
       <Categories />
