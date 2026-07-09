@@ -5,138 +5,159 @@ import noodles from "../assets/Restaurant4.png";
 
 const restaurants = [
   {
+    id: 1,
     image: burger,
-    name: "Burger House",
-    rating: "4.8",
-    time: "20 min",
+    name: "McDonald's",
+    category: "burger",
+    rating: "4.5",
+    time: "20-25 min",
     price: "₹199",
   },
   {
+    id: 2,
     image: pizza,
-    name: "Pizza World",
-    rating: "4.7",
-    time: "25 min",
+    name: "Domino's Pizza",
+    category: "pizza",
+    rating: "4.6",
+    time: "25-30 min",
     price: "₹249",
   },
   {
+    id: 3,
     image: biryani,
-    name: "Royal Biryani",
-    rating: "4.9",
-    time: "30 min",
+    name: "Biryani By Kilo",
+    category: "biryani",
+    rating: "4.8",
+    time: "30-35 min",
     price: "₹299",
   },
   {
+    id: 4,
     image: noodles,
-    name: "Chinese Corner",
-    rating: "4.6",
-    time: "22 min",
+    name: "Wow! China",
+    category: "noodles",
+    rating: "4.4",
+    time: "20-25 min",
     price: "₹179",
   },
 ];
 
-function Restaurants() {
+function Restaurants({ search }) {
+
+  const filteredRestaurants = restaurants.filter((item) => {
+    if (!search.trim()) return true;
+
+    return (
+      item.category
+        .toLowerCase()
+        .includes(search.toLowerCase()) ||
+      item.name
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    );
+  });
+
   return (
-    <section className="relative overflow-hidden py-14 bg-gradient-to-br from-[#FFF8F2] via-[#FFFDF9] to-[#FFF4E6]">
+    <section
+      id="restaurants"
+      className="relative overflow-hidden bg-gradient-to-br from-[#FFF8F2] via-[#FFFDF9] to-[#FFF4E6] py-14"
+    >
 
-      {/* Orange Glow */}
+      <div className="absolute -top-28 -left-24 h-72 w-72 rounded-full bg-orange-300 opacity-20 blur-[120px]"></div>
 
-      <div className="absolute -top-28 -left-24 w-72 h-72 bg-orange-300 rounded-full blur-[120px] opacity-20"></div>
+      <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-orange-200 opacity-20 blur-[140px]"></div>
 
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-orange-200 rounded-full blur-[140px] opacity-20"></div>
+      <div className="relative mx-auto max-w-[1150px] px-6">
 
-      {/* Dots */}
-
-      <div className="absolute top-24 left-20 grid grid-cols-5 gap-2 opacity-40">
-        {Array.from({ length: 25 }).map((_, i) => (
-          <span
-            key={i}
-            className="w-1.5 h-1.5 bg-orange-400 rounded-full"
-          ></span>
-        ))}
-      </div>
-
-      <div className="absolute bottom-16 right-24 grid grid-cols-5 gap-2 opacity-40">
-        {Array.from({ length: 25 }).map((_, i) => (
-          <span
-            key={i}
-            className="w-1.5 h-1.5 bg-orange-400 rounded-full"
-          ></span>
-        ))}
-      </div>
-
-      {/* Circles */}
-
-      <div className="absolute top-28 right-32 w-8 h-8 border-2 border-orange-300 rounded-full"></div>
-
-      <div className="absolute bottom-24 left-24 w-6 h-6 bg-orange-300 rounded-full opacity-40"></div>
-
-      <div className="relative max-w-[1150px] mx-auto px-6">
-
-        <h2 className="text-4xl font-bold text-center">
+        <h2 className="text-center text-4xl font-bold">
           Popular <span className="text-orange-500">Restaurants</span>
         </h2>
 
-        <p className="text-center text-gray-500 mt-3">
-          Order from your favorite restaurants
+        <p className="mt-3 text-center text-gray-500">
+          Order from your favourite restaurants
         </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mt-10">
 
-  {restaurants.map((item, index) => (
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
 
-    <div
-      key={index}
-      className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-2 duration-300 overflow-hidden border border-orange-100"
-    >
+          {filteredRestaurants.length > 0 ? (
+            filteredRestaurants.map((item) => (
+              <div
+                key={item.id}
+                className="overflow-hidden rounded-2xl border border-orange-100 bg-white shadow-md transition hover:-translate-y-2 hover:shadow-xl"
+              >
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="h-44 w-full object-cover"
+                />
 
-      <img
-        src={item.image}
-        alt={item.name}
-        className="w-full h-32 object-cover"
-      />
+                <div className="p-4">
 
-      <div className="p-3">
+                  <h3 className="text-lg font-bold">
+                    {item.name}
+                  </h3>
 
-        <h3 className="font-bold text-base">
-          {item.name}
-        </h3>
+                  <div className="mt-3 flex justify-between text-sm text-gray-500">
 
-        <div className="flex justify-between text-sm text-gray-500 mt-2">
+                    <span>⭐ {item.rating}</span>
 
-          <span>⭐ {item.rating}</span>
+                    <span>{item.time}</span>
 
-          <span>{item.time}</span>
+                  </div>
 
-        </div>
+                  <div className="mt-4 flex items-center justify-between">
 
-        <div className="flex justify-between items-center mt-3">
+                    <span className="text-lg font-bold text-orange-500">
+                      {item.price}
+                    </span>
 
-          <span className="font-bold text-orange-500">
-            {item.price}
-          </span>
+                    <button className="rounded-lg bg-orange-500 px-4 py-2 text-white transition hover:bg-orange-600">
+                      Order
+                    </button>
 
-          <button className="bg-orange-500 hover:bg-orange-600 text-white text-sm px-3 py-1 rounded-lg duration-300">
-            Order
-          </button>
+                  </div>
+
+                </div>
+
+              </div>
+            ))
+                      ) : (
+            <div className="col-span-full flex flex-col items-center justify-center rounded-3xl border border-orange-100 bg-white py-16 shadow-md">
+
+              <h3 className="text-2xl font-bold text-gray-700">
+                No Restaurant Found 🍽️
+              </h3>
+
+              <p className="mt-3 text-center text-gray-500">
+                Try searching for
+                <span className="font-semibold text-orange-500">
+                  {" "}Pizza
+                </span>,
+                <span className="font-semibold text-orange-500">
+                  {" "}Burger
+                </span>,
+                <span className="font-semibold text-orange-500">
+                  {" "}Biryani
+                </span>
+                {" "}or
+                <span className="font-semibold text-orange-500">
+                  {" "}Noodles
+                </span>.
+              </p>
+
+            </div>
+          )}
 
         </div>
 
       </div>
 
-    </div>
-
-  ))}
-
-</div>
-      </div>
-
-      {/* Bottom Wave */}
-
-      <div className="absolute bottom-0 left-0 w-full h-20">
+      <div className="absolute bottom-0 left-0 h-20 w-full">
 
         <svg
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
-          className="w-full h-full"
+          className="h-full w-full"
         >
           <path
             fill="#FFEFD8"
